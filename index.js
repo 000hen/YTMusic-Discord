@@ -1,4 +1,4 @@
-const client = require('discord-rich-presence')('<YOUR ID HERE>');
+const client = require('discord-rich-presence')('864326540736331778'); //我建議使用我的ID
 const express = require('express');
 var song = 'Waiting for music...';
 var artist = 'No Artist';
@@ -11,33 +11,45 @@ update(song,artist);
 app.use(express.json());
 app.post("/", (request, response) => {
   let content = request.body;
-  if(content.song == undefined || content.song == null || tempTime == content.timeMax.replace(' ', '') || content.timeMax.replace(' ', '') == '0:00') {
-    response.sendStatus(200);
-    return;
-  }
-  
-  if(song == content.song) {
-    response.sendStatus(200);
-    return;
-  }
+
   tempTime = content.timeMax.replace(' ', '');
   song = content.song
+  artist = content.artist.replace(/\n/gm, "");
 
-  console.log('Playing now ' + content.song + ' by ' + content.artist + ' Time: ' + content.timeMax.replace(' ', ''));
-  update(content.song, content.artist,Date.now(), timeToMilli(content.timeMax.replace(' ', '')));
+  if (content.isPause) {
+    console.log(`Pauseing now ${content.song}, by ${artist}, Time: ${content.nowTime}/${timeToMilli(content.timeMax.replace(' ', '')) - Date.now()}`);
+    update(content.song, artist, Date.now());
+    response.sendStatus(200);
+    return;
+  }
+
+  console.log(`Playing now ${content.song}, by ${artist}, Time: ${content.nowTime}/${timeToMilli(content.timeMax.replace(' ', '')) - Date.now()}`);
+  update(content.song, artist,Date.now(), timeToMilli(content.timeMax.replace(' ', '')) - content.nowTime);
   response.sendStatus(200);
 });
 
 app.listen(3000, () => console.log('Ready Senpai!'));
 
-function update(song,artist,timeNow,timeMax) {
+function update(song, artist, timeNow, timeMax) {
+  if (!timeMax) {
+    client.updatePresence({
+      state: artist,
+      details: song,
+      largeImageKey: 'ytmusic',
+      largeImageText: "Music Paused",
+      smallImageKey: 'pause',
+      instance: true,
+    });
+    return;
+  }
   client.updatePresence({
     state: artist,
     details: song,
     startTimestamp: timeNow,
     endTimestamp: timeMax,
-    largeImageKey: 'ytmusic',
-    smallImageKey: 'play',
+    largeImageKey: "ytmusic",
+    largeImageText: "Music Playing",
+    smallImageKey: "play",
     instance: true,
   });
 }
