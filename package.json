@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ."
   },
-  "author": "DevDenis",
+  "author": "DevDenis, Recode By 000hen",
   "license": "ISC",
   "dependencies": {
     "discord-rich-presence": "0.0.8",
