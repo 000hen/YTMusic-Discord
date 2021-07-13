@@ -7,7 +7,7 @@ Shows YouTube Music as Discord Rich Presence
  ![Playing](/img/playing.png)
  * Pasuing:  
  ![Pausing](/img/pause.png)
- * CLI:  
+ * CLI: (Time is millisecond)  
  ![CLI](/img/cliex.png)
 
 ## How To Use
