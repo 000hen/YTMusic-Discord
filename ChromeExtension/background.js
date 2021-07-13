@@ -1,8 +1,10 @@
-function updateRichPresence(songName, artistName, timeMax) {
+function updateRichPresence(songName, artistName, timeMax, nowTime, isPause) {
     var data = {
         song: songName,
         artist: artistName,
-        timeMax: timeMax
+        timeMax: timeMax,
+        nowTime: nowTime,
+        isPause: isPause
     };
 
     var settings = {
@@ -27,5 +29,5 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    updateRichPresence(request.song, request.artist, request.timeMax)
+    updateRichPresence(request.song, request.artist, request.timeMax, request.nowTime, request.isPause)
 });
