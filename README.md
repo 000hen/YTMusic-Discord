@@ -19,5 +19,5 @@ Shows YouTube Music as Discord Rich Presence
 
 ## Issue
 
- * A very little chance that Chrome may have an Error.
- * CLI push too many request.
+ * ~~A very little chance that Chrome may have an Error.~~ I blocked the error messages.
+ * ~~CLI push too many request.~~ I fixed this error.
